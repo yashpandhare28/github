@@ -1,0 +1,30 @@
+import java.util.Scanner;
+import com.mongodb.*;
+
+public class mongo {
+	
+	public static void main(String[] args) throws Exception 
+	{ 
+		// throwing an exception 
+		try { 
+			MongoClient mongoClient = new MongoClient("localhost",27017); // establishing a server connection in localhost 
+			DB db = mongoClient.getDB("DBMS12"); // creating database called student 
+			System.out.println("connection established"); // prints connection established if database created 
+			DBCollection coll = db.getCollection("student"); 
+			
+			BasicDBObject query = new BasicDBObject();
+
+			DBCursor cursor = coll.find(query);
+
+			while(cursor.hasNext())
+			{
+			   System.out.println(cursor.next());
+			}
+			cursor.close();
+
+		} 
+		catch (Exception e) { 
+			System.out.println("error"); // if the exception occurs prints error 
+		} 
+	}
+}

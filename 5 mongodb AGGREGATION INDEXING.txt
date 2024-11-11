@@ -1,0 +1,33 @@
+
+
+use aggregation
+
+db.createCollection('orders')
+
+db.orders.insertMany([
+    { Customer_ID: 101, item: "item1", amt: 100, quantity: 2, status: "pending" },
+    { Customer_ID: 102, item: "item2", amt: 200, quantity: 3, status: "shipped" },
+    { Customer_ID: 101, item: "item3", amt: 50, quantity: 1, status: "delivered" },
+    { Customer_ID: 103, item: "item1", amt: 150, quantity: 2, status: "pending" }
+])
+
+db.orders.find()
+
+db.orders.aggregate([{$count:"Total No of Documents"}]) 
+
+ db.orders.aggregate([{$sort:{amt:1}}])
+
+db.orders.createIndex({ Customer_ID: 1 })
+
+db.orders.createIndex({ item: 1 })
+
+db.orders.aggregate([
+    { $sort: { amt: 1 } },
+    { $limit: 1 }
+])
+
+db.orders.getIndexes()
+
+
+
+

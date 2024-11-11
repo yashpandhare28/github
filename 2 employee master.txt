@@ -1,0 +1,32 @@
+create database branch;
+
+ use branch;
+
+create table branchMaster (branch_id int primary key,branch_name varchar(100) not null);
+
+ desc branchMaster;
+
+ create table employeeMaster (employee_id int primary key, first_name
+varchar(50) not null,middle_name varchar(50),last_name varchar(50) not null,
+department varchar(50), manager_id int, branch_id int,FOREIGN KEY (branch_id
+) REFERENCES branchMaster(branch_id));
+
+desc employeeMaster;
+
+ insert into branchMaster values (1, 'Comp'),(2, 'IT'),(3
+, 'Civil');
+
+ select *from branchMaster;
+
+ insert into employeeMaster values (101, 'John', 'A.', 'Doe', 'Enginee
+ring', NULL, 1),(102, 'Jane', NULL, 'Smith', 'Marketing', 101, 2),(103, 'Emily', 'B.', 'Johnson', 'Sales', 101, 3);
+
+select *from employeeMaster;
+
+create index idx_emp on employeeMaster (first_name);
+
+ show index from employeeMaster;
+
+create view employee_details as select first_name from employeeMaster;
+
+select * from employee_details;

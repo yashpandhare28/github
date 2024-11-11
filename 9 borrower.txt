@@ -1,0 +1,44 @@
+create database libary;
+
+use libary;
+
+create table Borrower (RollNo int primary key, Name varchar(45) not null, DateOfIssue date, NameOfBook varchar(45), Status char);
+
+desc Borrower;
+
+create table Fine (RollNo int primary key, DateOfIssue date, Amount int);
+
+desc Fine;
+
+delimiter #
+
+create procedure Calculate_Fine (in roll int, in name varchar(45))
+begin
+declare d date;
+declare difference int;
+declare fine_amount int;
+select DateOfIssue into d from Borrower where RollNo=roll and NameOfBook=name;
+select datediff (curdate(),d) into difference;
+if (difference>15) and (difference<=30) then
+set fine_amount= 5 * difference;
+insert into Fine values (roll,d,fine_amount);
+elseif (difference>30) then
+set fine_amount= 50 * difference;
+insert into Fine values (roll,d,fine_amount);
+end if;
+update Borrower set status='R' where RollNo=roll;
+end #
+
+delimiter ;
+
+insert into Borrower values (1, 'Madhur MJ', '2023-10-31', 'Murder On The Orient Express', 'I'), (2, 'Madhur J', '2023-11-11', 'Ikigai', 'I'), (3, 'MJ', '2023-10-08', 'Harry Potter & The Goblet Of Fire', 'I');
+
+call Calculate_Fine (1, 'Murder On The Orient Express');
+
+call Calculate_Fine (2, 'Ikigai');
+
+call Calculate_Fine (3, 'Harry Potter & The Goblet Of Fire');
+
+select * from Fine;
+
+select * from Borrower;

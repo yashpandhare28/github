@@ -1,0 +1,25 @@
+use que;
+
+db.createCollection('Student')
+
+ db.Student.insertOne({StuRoll : 55, StuName : 'Madhur', StuMarks: 69, StuBranch: 'Computer'})
+
+db.Student.insertMany([{StuRoll : 23, StuName : 'Bharat', StuMarks: 75, StuBranch: 'FirstYear'}, {StuRoll: 64, StuName: 'Gaurav', StuMarks: 80, StuBranch: 'IT'}, {StuRoll: 80, StuName: 'Shubhendu', StuMarks: 70, StuBranch: 'Computer'}, {StuRoll: 69, StuName: 'MJ', StuMarks: 100, StuBranch: 'AI'}])
+
+db.Student.find()
+
+db.Student.find({StuMarks: {$eq: 69}})
+
+db.Student.find({$and:[{StuRoll: 80},{StuBranch: 'Computer'}]})
+
+db.Student.find({$or:[{StuBranch: 'IT'},{StuBranch: 'Computer'}]})
+
+db.Student.updateOne({StuRoll: 23}, {$set: {StuMarks: 90}})
+
+db.Student.find({StuRoll: 23})
+
+db.Student.renameCollection('StudentData')
+
+show collections
+
+db.StudentData.find()

@@ -1,0 +1,65 @@
+create database lib;
+
+use lib;
+
+create table Library (BookID int primary key, BookTitle varchar(45) not null, BookAuthor varchar(25) not null, BookEdition int, NumberOfCopies int);
+
+desc Library;
+
+create table Library_Audit (BookID int not null, BookTitle varchar(45) not null, BookAuthor varchar(25) not null, BookEdition int, NumberOfCopies int, DateModified date, Operation varchar(15));
+
+desc Library_Audit;
+
+delimiter #
+
+create trigger LibraryUpdateTrigger
+before update on Library for each row
+begin
+declare Operation varchar(15);
+set Operation = "Updated";
+insert into Library_Audit values (old.BookID, old.BookTitle, old.BookAuthor, old.BookEdition, old.NumberOfCopies, curdate(), Operation);
+end #
+
+create trigger LibraryDeleteTrigger
+before delete on Library for each row
+begin
+declare Operation varchar(15);
+set Operation = "Deleted";
+insert into Library_Audit values (old.BookID, old.BookTitle, old.BookAuthor, old.BookEdition, old.NumberOfCopies, curdate(), Operation);
+end #
+
+delimiter ;
+
+insert into Library values (1, 'DBMS', 'Henry Korth', 1, 1000), (2, 'CNS', 'Behrouz Forouzan', 2, 500), (3, 'TOC', 'Vikas Kumar', 1, 200), (4, 'SPOS', 'Abraham Silberschatz', 2, 300);
+
+select * from Library;
+
+update Library set BookEdition = 6 where BookID = 1;
+
+select * from Library;
+
+select * from Library_Audit;
+
+update Library set BookAuthor = 'John Hopcraft' where BookTitle = 'TOC';
+
+select * from Library;
+
+select * from Library_Audit;
+
+delete from Library where BookTitle = 'TOC';
+
+select * from Library;
+
+select * from Library_Audit;
+
+update Library_Audit set BookTitle='SPOS' where BookAuthor='John Hopcraft';
+
+update Library_Audit set BookID=2 where BookTitle='TOC';
+
+
+
+
+
+
+
+

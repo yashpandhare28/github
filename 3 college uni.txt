@@ -1,0 +1,64 @@
+create database college;
+
+use college;
+
+create table dept(ins_id int primary key, deptnm varchar(50),budget DECIMAL(10, 2));
+
+ desc dept;
+
+ create table instructor( inst_id int primary key,deptnm varchar(50), salary DECIMAL(10, 2),name varchar(50),raise DECIMAL(10, 2));
+
+ desc instructor;
+
+ create table student( stud_id int primary key, deptnm varchar(50),sem int,name varchar(50), yr int,credits int);
+
+ desc student;
+
+create table teaches(inst_id int,course varchar(50),sem int,yr int,PRIMARY KEY (inst_id, course, sem, yr),FOREIGN KEY (inst_id) REFERENCES instructor(inst_id));
+
+desc teaches;
+
+ insert into dept values (1, 'Computer Science', 500000),(2, 'Mathematics', 300000),(3, 'Physics', 400000);
+
+select * from dept;
+
+insert into instructor values (1, 'Computer Science', 2500, 'Dr. Alice', 500),(2, 'Mathematics', 1800, 'Dr. Bob', 400),(3, 'Physics', 2200, 'Dr. Charlie', 300),(4, 'Computer Science', 2300, 'Dr. David', 450),(5, 'Physics', 2600, 'Dr. Eve', 600);
+
+
+select * from instructor;
+
+insert into student values (1, 'Computer Science', 1, 'John', 2024, 15),(2, 'Mathematics', 2, 'Jane', 2024, 16),(3, 'Physics', 1, 'Mark', 2024, 14);
+
+select * from student;
+
+insert into teaches values (1, 'CS101', 1, 2024),(2, 'MATH101', 1, 2024),(3, 'PHYS101', 1, 2024),(4, 'CS102', 2, 2024),(5, 'PHYS102', 2, 2024);
+
+ select * from teaches;
+
+ SELECT deptnm, AVG(salary) AS avg_salary FROM instructor GROUP BY deptnm;
+
+ SELECT deptnm, MAX(salary) AS max_salary FROM instructor GROUP BY deptnm ORDER BY max_salary DESC LIMIT 1;
+
+ DELETE FROM teaches WHERE inst_id IN (  SELECT inst_id FROM instructor WHERE salary < 2000 );
+
+ delete from instructor where salary <2000;
+
+ select *from instructor;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

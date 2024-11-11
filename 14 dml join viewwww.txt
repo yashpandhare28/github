@@ -1,0 +1,71 @@
+create database joinn;
+
+use joinn;
+
+create table Student (StuRoll int primary key auto_increment, StuName varchar(45) not null, StuMarks int not null, StuDeptID int not null);
+
+desc Student;
+
+create table Department (DeptID int primary key, DeptName varchar(20) not null);
+
+desc Department;
+
+insert into Department values (101, 'First Year'), (401, 'Computer'), (501, 'IT'), (601, 'EnTC');
+
+select * from Department;
+
+insert into Student values (1, 'Anshita', 68, 401), (2, 'Yash', 75, 101), (3, 'Aditi', 80, 501), (4, 'Geetesh', 90, 501), (5,'Mugdha', 100, 420);
+
+select * from Student join Department on Student.StuDeptID=Department.DeptID;
+
+ select * from Student inner join Department on Student.StuDeptID=Department.DeptID;
+
+select * from Student left join Department on Student.StuDeptID=Department.DeptID;
+
+select * from Student left outer join Department on Student.StuDeptID=Department.DeptID;
+
+select * from Student right join Department on Student.StuDeptID=Department.DeptID;
+
+select * from Student right outer join Department on Student.StuDeptID=Department.DeptID;
+
+select * from Student join Department;
+
+select * from Student cross join Department;
+
+select * from Student A, Student B where A.StuDeptID<>B.StuDeptID;
+
+select * from Student A, Student B where A.StuDeptID=B.StuDeptID;
+
+select * from Student A, Student B where A.StuName<>B.StuName and A.StuDeptID=B.StuDeptID;
+
+select * from Student A, Student B where A.StuRoll<>B.StuRoll and A.StuDeptID=B.StuDeptID order by A.StuRoll;
+
+ select * from Student where StuMarks in (Select StuMarks from Student where StuMarks > 80);
+
+ select StuRoll, StuName from Student where StuMarks in (Select StuMarks from Student where StuMarks > 80);
+
+select StuRoll, StuName, StuDeptID from Student where StuDeptID not in (select DeptID from Department);
+
+create view DepartmentNames as select DeptName from Department;
+
+select * from DepartmentNames;
+
+create view StudentNames as select StuName from Student;
+
+select * from StudentNames;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

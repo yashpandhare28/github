@@ -1,0 +1,62 @@
+
+
+use crude
+
+db.createCollection('Student')
+
+show collections
+
+ db.Student.insertOne({Fname : 'Anshita', Mname : 'Shekhar', Lname : 'Patil', Branch : 'Comp', Marks : 87, Year : 'third'});
+
+db.Student.findOne()
+
+db.Student.insertMany([{Fname : 'Aditi' , Mname : 'Laxman', Lname : 'Patil', Branch : 'ENTC', Marks : 90, Year : 'third'} , {Fname : 'Yash' , Mname : 'Prakash', Lname : 'Pandhare', Branch : 'Comp', Marks : 92,Year : 'third'}, {Fname : 'Arnav', Mname : 'Mahesh', Lname : 'Guddi', Branch : 'IT', Marks : 80, Year: 'third'}]);
+
+db.Student.find()
+
+db.Student.find({Marks: {$eq: 87}})
+
+db.Student.find({},{_id: 0, Marks : 1})
+
+ db.Student.find({}, {Fname: 1, Marks: 1})
+
+ db.Student.find({Marks: {$gte: 90}}, {_id: 0, Fname: 1, })
+
+db.Student.find({$and:[{Marks: 80},{Branch: 'Comp'}]}) 
+
+db.Student.find({$or:[{Branch: 'ENTC'}, {Branch: 'Comp'}]})
+
+db.Student.find({$nor:[{StuBranch: 'ENTC'},{StuBranch: 'Comp'}]})
+
+db.Student.find({Fname: {$not:{$eq:'Anshita'}}}) 
+
+db.Student.updateOne({Fname:'Yash'}, {$set:{Marks: 87}})
+
+db.Student.find({Fname: 'Yash'})
+
+db.Student.find({Branch: {$in:['Comp', 'IT']}})
+
+db.Student.renameCollection('StudentData')
+
+show collections
+
+db.StudentData.find()
+
+db.StudentData.deleteOne({Marks: 80})
+
+db.StudentData.find()
+
+db.StudentData.deleteMany({}) 
+
+db.StudentData.find()
+
+ db.StudentData.drop() 
+
+db.dropDatabase()
+
+show databases
+
+
+
+
+

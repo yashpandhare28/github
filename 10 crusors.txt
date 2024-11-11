@@ -1,0 +1,54 @@
+create database curs;
+
+use curs;
+
+create table O_RollCall (RollNo int primary key, Name varchar(20), Address varchar(30));
+
+desc O_RollCall;
+
+create table N_RollCall (RollNo int primary key, Name varchar(20), Address varchar(30));
+
+desc N_RollCall;
+
+delimiter #
+
+create procedure MergeCursor (in Roll_In int)
+begin
+declare exit_loop boolean;
+declare c1 cursor for select RollNo from O_RollCall where RollNo=Roll_In;
+declare continue handler for not found set exit_loop = TRUE;
+open c1;
+fetch c1 into Roll_In;
+if not exists(select * from N_RollCall where RollNo=Roll_In) then
+insert into N_RollCall select * from O_RollCall where RollNo=Roll_In;
+end if;
+close c1;
+end #
+
+ delimiter ;
+
+insert into O_RollCall values (1,'Madhur','Pune');
+
+insert into O_RollCall values (2,'Anshita','Mumbai');
+
+insert into O_RollCall values (3,'Bharat','Pune');
+
+select * from O_RollCall;
+
+insert into N_RollCall values (3,'Aditi','Mumbai');
+
+insert into N_RollCall values (4,'Mugdha','Mumbai');
+
+select * from N_RollCall;
+
+call MergeCursor(1);
+
+select * from N_RollCall;
+
+call MergeCursor(2);
+
+select * from N_RollCall;
+
+call MergeCursor(3);
+
+select * from N_RollCall;

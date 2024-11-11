@@ -1,0 +1,38 @@
+create database stud;
+
+use stud;
+
+CREATE TABLE students (student_id INT PRIMARY KEY, student_name VARCHAR(50) );
+
+INSERT INTO students (student_id, student_name) VALUES (1, 'Chandler');
+
+INSERT INTO students (student_id, student_name) VALUES (2, 'Phoebe');
+
+ INSERT INTO students (student_id, student_name) VALUES (3, 'Monica');
+
+INSERT INTO students (student_id, student_name) VALUES (4, 'Joey');
+
+INSERT INTO students (student_id, student_name) VALUES (5, 'Ross');
+
+INSERT INTO students (student_id, student_name) VALUES (6, 'Rachel');
+
+COMMIT;
+
+DELIMITER //
+
+CREATE PROCEDURE get_student_name (IN p_student_id INT)
+BEGIN
+DECLARE v_student_name VARCHAR(50);
+SELECT student_name INTO v_student_name
+FROM students
+WHERE student_id = p_student_id;
+SELECT v_student_name AS student_name;
+END//
+
+DELIMITER ;
+
+CALL get_student_name(1);  
+CALL get_student_name(3);  
+CALL get_student_name(5); 
+CALL get_student_name(2);   
+

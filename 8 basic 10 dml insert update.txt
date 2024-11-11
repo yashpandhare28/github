@@ -1,0 +1,59 @@
+show databases;
+
+create database college;
+
+use college;
+
+create table student(Rno int(3),Name varchar(20),Subject varchar(20),Marks float(2));
+
+desc student;
+
+insert into student values(1,"AAA","DBMS",65);
+
+insert into student values(2,"BBB","TOC",78);
+
+insert into student values(3,"CCC","CNS",80);
+
+insert into student values(1,"AAA","TOC",80.5);
+
+insert into student values(2,"BBB","CNS",81.2);
+
+insert into student values(3,"CCC","DBMS",82);
+
+insert into student values(1,"AAA","CNS",90.3);
+
+insert into student values(2,"BBB","DBMS",85);
+
+insert into student values(2,"CCC","TOC",88.4);
+
+select * from student;
+
+update student set Rno=3 where Name="CCC";
+
+select * from student;
+
+alter table student add column phnno int(10);
+
+update student set phnno=4563 where Name="AAA";
+
+update student set phnno=5678 where Name="BBB";
+
+update student set phnno=9654 where Name="CCC";
+
+select max(marks) from student;
+
+select min(marks) from student;
+
+select avg(marks) from student where name="AAA";
+
+select sum(marks) from student where Rno=3;
+
+select count(distinct(name)) from student;
+
+select Name from student order by Rno asc;
+
+select max(Marks) as "2nd highest Marks" from student where Marks<(select max(Marks) from student);
+
+delete from student where Name="AAA" and Marks=65;
+
+alter table student drop Marks;

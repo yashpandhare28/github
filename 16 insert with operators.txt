@@ -1,0 +1,86 @@
+create database bookstore;
+
+use bookstore;
+
+CREATE TABLE books (
+    book_id INT PRIMARY KEY,
+    title VARCHAR(100),
+    author VARCHAR(50),
+    price DECIMAL(10,2),
+    genre VARCHAR(50),
+    publication_year INT
+);
+
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100),
+    phone_number VARCHAR(20)
+);
+
+INSERT INTO books (book_id, title, author, price, genre, publication_year)VALUES (101, 'The Lord of the Rings', 'J.R.R. Tolkien', 29.99, 'Fantasy', 1954),(102, 'Pride and Prejudice', 'Jane Austen', 15.99, 'Romance', 1813),(103, 'To Kill a Mockingbird', 'Harper Lee', 12.99, 'Fiction', 1960);
+
+INSERT INTO books (book_id, title, author, price, genre, publication_year)VALUES (104, 'clash of clan', 'George Orwell', 14.99, 'Sci-Fi', 1949);
+
+INSERT INTO customers (customer_id, first_name, last_name, email, phone_number)
+VALUES (1, 'John', 'Doe', 'johndoe@example.com', '123-456-7890');
+
+INSERT INTO customers (customer_id, first_name, last_name, email, phone_number)
+VALUES (2, 'Jane', 'Smith', 'janesmith@example.com', '987-654-3210');
+
+INSERT INTO customers (customer_id, first_name, last_name, email, phone_number)
+VALUES (3, 'Michael', 'Johnson', 'michaeljohnson@example.com', '555-555-5555');
+
+INSERT INTO customers (customer_id, first_name, last_name, email, phone_number)
+VALUES (4, 'Stefen', 'Smith', 'stefensmith@example.com', '445-555-4455');
+
+SELECT * FROM books WHERE price > 20;
+
+UPDATE books SET price = 35.99 WHERE book_id = 101;
+
+SELECT * FROM customers WHERE last_name LIKE 'Smith%';
+
+SELECT * FROM books ORDER BY price DESC LIMIT 5;
+
+SELECT AVG(price) FROM books WHERE genre = 'Fantasy';
+
+ CREATE TABLE purchases (customer_id INT,    book_id INT);
+
+INSERT INTO purchases (customer_id, book_id)
+VALUES
+    (1, 101),
+    (2, 102),
+    (3, 103),
+    (1, 104);
+
+SELECT c.*
+FROM customers c
+JOIN purchases p ON c.customer_id = p.customer_id
+JOIN books b ON p.book_id = b.book_id
+WHERE b.title = 'The Lord of the Rings';
+
+SELECT author, COUNT(*) AS book_count
+FROM books
+GROUP BY author
+ORDER BY book_count DESC
+LIMIT 1;
+
+SELECT genre, COUNT(*) AS book_count
+FROM books
+GROUP BY genre;
+
+SELECT AVG(price) AS average_price FROM books;
+
+(SELECT book_id, title FROM books WHERE genre = 'Fantasy')
+UNION
+(SELECT book_id, title FROM books WHERE genre = 'Sci-Fi');
+
+
+
+
+
+
+
+
+
